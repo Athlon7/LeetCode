@@ -1,13 +1,21 @@
-﻿生成启动时间为 2016/5/5 11:31:53。
+﻿生成启动时间为 2016/5/13 20:18:45。
      1>项目“F:\LeetCode\Test\Test\Test.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          E:\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Test.cpp
          Test.cpp
+     1>f:\leetcode\test\test\test.cpp(64): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: 参见“strcpy”的声明
+     1>f:\leetcode\test\test\test.cpp(79): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: 参见“strcpy”的声明
+     1>f:\leetcode\test\test\test.cpp(96): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: 参见“strcpy”的声明
+     1>f:\leetcode\test\test\test.cpp(112): warning C4101: “sets”: 未引用的局部变量
+     1>f:\leetcode\test\test\test.cpp(24): warning C4700: 使用了未初始化的局部变量“i”
        Link:
-         E:\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\LeetCode\Test\Debug\Test.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\LeetCode\Test\Debug\Test.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\LeetCode\Test\Debug\Test.lib" /MACHINE:X86 Debug\Test.obj
+         E:\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\LeetCode\Test\Debug\Test.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\LeetCode\Test\Debug\Test.pdb" /SUBSYSTEM:CONSOLE /STACK:"10485760" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\LeetCode\Test\Debug\Test.lib" /MACHINE:X86 Debug\Test.obj
          Test.vcxproj -> F:\LeetCode\Test\Debug\Test.exe
      1>已完成生成项目“F:\LeetCode\Test\Test\Test.vcxproj”(Build 个目标)的操作。
 
 已成功生成。
 
-已用时间 00:00:00.71
+已用时间 00:00:00.77
