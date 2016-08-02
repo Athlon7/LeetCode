@@ -73,6 +73,7 @@ struct ListNode* mergeKLists(struct ListNode** lists, int listsSize)
 		ptr->next = p;
 		ptr = p;
 	}
+	ptr->next = NULL;
 
 	return head;
 }
