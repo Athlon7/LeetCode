@@ -79,5 +79,6 @@ public:
         	nums[pos] = temp;
         	sort(nums, pos + 1, n - 1);
         }
+        delete [] flag;
     }
 };
