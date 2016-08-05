@@ -1,94 +1,91 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class Solution
 {
 public:
-    int isValid(string s, int *pos, int *reverse)
+    int binSearch(vector<int> &nums, int target, int left, int right)
     {
-    	size_t length = s.size();
-        int i = *pos, stack = 0, temp = 0, max = 0;        
+        int i = left, j = right, mid;
 
-        while(i < length)
+        while(i <= j)
         {
-        	if(s[i] == '(')
-        		stack++;
-        	else
-        		stack--;
-        	temp++;
-        	if(stack == 0 && temp > max)
-        		max = temp;
-        	if(stack < 0)
-            {
-        		*pos = i;
-                break;
-            }
-            i++;
+            mid = (i + j) / 2;
+            if(nums[mid] == target)
+                return mid;
+            else if(target > nums[mid])
+                i = mid + 1;
+            else if(target < nums[mid])
+                j = mid - 1;
         }
-
-        if(i == length && stack > 5)
-            *reverse = stack;
-        return max;
+        return -1;
     }
 
-    int isValid_rev(string s, int *pos)
+    // 先折半然后再附近遍历寻找
+    // vector<int> searchRange(vector<int>& nums, int target)
+    // {
+    //     int length = nums.size();
+    //     int ans, i;
+    //     vector<int> pos(2, -1);
+
+    //     if((ans = binSearch(nums, target, 0, length - 1)) == -1)
+    //      return pos;
+    //     else
+    //     {
+    //      for(i = ans;i >= 0;--i)
+    //      {
+    //          if(nums[i] != target)
+    //              break;
+    //      }
+    //      pos[0] = i + 1;
+    //      for(i = ans;i < length;++i)
+    //          if(nums[i] != target)
+    //              break;
+    //      pos[1] = i - 1;
+    //     }
+    //     return pos;
+    // }
+    // 
+    
+    // 始终折半
+    vector<int> searchRange(vector<int>& nums, int target)
     {
-        size_t length = s.size();
-        int i = *pos, stack = 0, temp = 0, max = 0;        
+        int length = nums.size();
+        int ans, i;
+        vector<int> pos(2, -1);
 
-        while(i >= 0)
+        if((ans = binSearch(nums, target, 0, length - 1)) == -1)
+            return pos;
+        else
         {
-            if(s[i] == ')')
-                stack++;
-            else
-                stack--;
-            temp++;
-            if(stack == 0 && temp > max)
-                max = temp;
-            if(stack < 0)
+            int front_right = ans - 1, rare_left = ans + 1;
+            pos[0] = ans;
+            pos[1] = ans;
+            int front = 1;
+            while(front > 0)
             {
-                *pos = i;
-                break;
-            }
-            i--;
-        }
-        return max;
-    }
-
-    int longestValidParentheses(string s)
-    {
-        if(s.size() <= 1)
-        	return 0;
-
-        size_t length = s.size();        
-        int max = 0, temp, reverse = 0;
-
-        for(int i = 0;i < length - max;i++)
-        {
-        	if(s[i] == '(')
-            {
-        		temp = isValid(s, &i, &reverse);
-                if(temp > max)
-                    max = temp;
-                if(reverse)
-                    break;
-            }            
-        }
-        if(reverse)
-        {
-            for(int i = length - 1; i >= 0;i--)
-            {
-                if(s[i] == ')')
+                front = binSearch(nums, target, 0, front_right);
+                if(front != -1)
                 {
-                    temp = isValid_rev(s, &i);
-                    if(temp > max)
-                        max = temp;
+                    pos[0] = front;                    
+                    front_right = front - 1;
+                }
+            }
+            int rare = 1;
+            while(rare < length && rare != -1)
+            {
+                rare = binSearch(nums, target, rare_left, length -1);
+                if(rare != -1)
+                {
+                    pos[1] = rare;
+                    rare_left = rare + 1;                    
                 }
             }
         }
-        return max;
+        return pos;
     }
 };
 
@@ -96,5 +93,18 @@ int main()
 {
     Solution a;
     int ans;
-    ans = a.longestValidParentheses(")))(()((((((((");
+    vector<int> input(10);
+    vector<int> output;
+    for(int i = 0;i < 10;++i)
+    {
+        input[i] = i / 2;
+    }
+    for(vector<int>::iterator i = input.begin();i != input.end();++i)
+        cout << *i << " ";
+    cout << endl;
+
+    output = a.searchRange(input, 2);
+    
+    for(vector<int>::iterator i = output.begin();i != output.end();++i)
+        cout << *i << " ";
 }
