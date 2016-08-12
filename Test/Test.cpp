@@ -1,110 +1,86 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <stack>
+#include <algorithm>
 
 using namespace std;
 
 class Solution
 {
 public:
-    int binSearch(vector<int> &nums, int target, int left, int right)
+    int findComb(vector<int>& candidates, vector<vector<int> >& ans, int target, int num)
     {
-        int i = left, j = right, mid;
+        int temp = target;
+        static int cnt = 0;
+        static vector<int> stack;
+        bool flag = false;
 
-        while(i <= j)
-        {
-            mid = (i + j) / 2;
-            if(nums[mid] == target)
-                return mid;
-            else if(target > nums[mid])
-                i = mid + 1;
-            else if(target < nums[mid])
-                j = mid - 1;
+        for(int i = num;i < candidates.size();++i)
+        {            
+            if(flag && i > 0 && candidates[i] == candidates[i - 1])
+                continue;
+            if(candidates[i] <= target)
+            {
+                temp = target - candidates[i];
+                stack.push_back(candidates[i]); //push                
+                cout << "stack push:";
+                for(vector<int>::iterator j = stack.begin();j != stack.end();++j)
+                        cout << *j << " ";
+                cout << endl;
+
+                if(temp == 0)   //found target
+                {
+                    ans.push_back(stack);
+                    cout << "out:"; 
+                    for(vector<int>::iterator j = stack.begin();j != stack.end();++j)
+                        cout << *j << " ";
+                    cout << endl;
+                    stack.pop_back();
+                    flag = true;
+                    continue;
+                }
+                findComb(candidates, ans, temp, i + 1);
+                stack.pop_back();
+
+                cout << "stack_pop:";
+                for(vector<int>::iterator j = stack.begin();j != stack.end();++j)
+                        cout << *j << " ";
+                cout << endl;
+            }
+            flag = true;
         }
-        return -1;
+        return 0;
     }
 
-    // 先折半然后再附近遍历寻找
-    // vector<int> searchRange(vector<int>& nums, int target)
-    // {
-    //     int length = nums.size();
-    //     int ans, i;
-    //     vector<int> pos(2, -1);
-
-    //     if((ans = binSearch(nums, target, 0, length - 1)) == -1)
-    //      return pos;
-    //     else
-    //     {
-    //      for(i = ans;i >= 0;--i)
-    //      {
-    //          if(nums[i] != target)
-    //              break;
-    //      }
-    //      pos[0] = i + 1;
-    //      for(i = ans;i < length;++i)
-    //          if(nums[i] != target)
-    //              break;
-    //      pos[1] = i - 1;
-    //     }
-    //     return pos;
-    // }
-    // 
-    
-    // 始终折半
-    vector<int> searchRange(vector<int>& nums, int target)
+    vector<vector<int> > combinationSum2(vector<int>& candidates, int target)
     {
-        int length = nums.size();
-        int ans, i;
-        vector<int> pos(2, -1);
+        sort(candidates.begin(), candidates.end(), greater<int>());
 
-        if((ans = binSearch(nums, target, 0, length - 1)) == -1)
-            return pos;
-        else
-        {
-            int front_right = ans - 1, rare_left = ans + 1;
-            pos[0] = ans;
-            pos[1] = ans;
-            int front = 1;
-            while(front > 0)
-            {
-                front = binSearch(nums, target, 0, front_right);
-                if(front != -1)
-                {
-                    pos[0] = front;                    
-                    front_right = front - 1;
-                }
-            }
-            int rare = 1;
-            while(rare < length && rare != -1)
-            {
-                rare = binSearch(nums, target, rare_left, length -1);
-                if(rare != -1)
-                {
-                    pos[1] = rare;
-                    rare_left = rare + 1;                    
-                }
-            }
-        }
-        return pos;
+        for(vector<int>::iterator i = candidates.begin();i != candidates.end();++i)
+            cout << *i << " ";
+        vector<vector<int> > ans;
+
+        findComb(candidates, ans, target, 0);
+        return ans;
     }
 };
 
 int main()
 {
     Solution a;
-    int ans;
-    vector<int> input(10);
-    vector<int> output;
-    for(int i = 0;i < 10;++i)
-    {
-        input[i] = i / 2;
-    }
-    for(vector<int>::iterator i = input.begin();i != input.end();++i)
-        cout << *i << " ";
-    cout << endl;
 
-    output = a.searchRange(input, 2);
-    
-    for(vector<int>::iterator i = output.begin();i != output.end();++i)
-        cout << *i << " ";
+    vector<vector<int> > output;  
+
+    vector<int> input(7);
+    input[0] = 10; 
+    input[1] = 1;
+    input[2] = 2;
+    input[3] = 7;
+    input[4] = 6;
+    input[5] = 1;
+    input[6] = 5;
+
+    output = a.combinationSum2(input, 8);
 }
