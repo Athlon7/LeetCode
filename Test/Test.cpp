@@ -10,77 +10,71 @@ using namespace std;
 class Solution
 {
 public:
-    int findComb(vector<int>& candidates, vector<vector<int> >& ans, int target, int num)
+    vector<int> spiralOrder(vector<vector<int> >& matrix)
     {
-        int temp = target;
-        static int cnt = 0;
-        static vector<int> stack;
-        bool flag = false;
+        vector<int> ans;
+        if(matrix.size() == 0)
+            return ans;
+        int num = matrix.size() * matrix[0].size();
+        int up = 0, down = matrix.size() - 1, left = 0;
+        int right = matrix[0].size() - 1;
 
-        for(int i = num;i < candidates.size();++i)
-        {            
-            if(flag && i > 0 && candidates[i] == candidates[i - 1])
-                continue;
-            if(candidates[i] <= target)
-            {
-                temp = target - candidates[i];
-                stack.push_back(candidates[i]); //push                
-                cout << "stack push:";
-                for(vector<int>::iterator j = stack.begin();j != stack.end();++j)
-                        cout << *j << " ";
-                cout << endl;
-
-                if(temp == 0)   //found target
-                {
-                    ans.push_back(stack);
-                    cout << "out:"; 
-                    for(vector<int>::iterator j = stack.begin();j != stack.end();++j)
-                        cout << *j << " ";
-                    cout << endl;
-                    stack.pop_back();
-                    flag = true;
-                    continue;
-                }
-                findComb(candidates, ans, temp, i + 1);
-                stack.pop_back();
-
-                cout << "stack_pop:";
-                for(vector<int>::iterator j = stack.begin();j != stack.end();++j)
-                        cout << *j << " ";
-                cout << endl;
-            }
-            flag = true;
+        while(ans.size() != num)
+        {
+            for(int i = left;i <= right;++i)
+                ans.push_back(matrix[up][i]);
+            if(ans.size() == num)
+                break;
+            ++up;
+            for(int i = up;i <= down;++i)
+                ans.push_back(matrix[i][right]);
+            if(ans.size() == num)
+                break;
+            --right;
+            for(int i = right;i >= left;--i)
+                ans.push_back(matrix[down][i]);
+            if(ans.size() == num)
+                break;
+            --down;
+            for(int i = down;i >= up;--i)
+                ans.push_back(matrix[i][left]);
+            if(ans.size() == num)
+                break;
+            ++left;
         }
-        return 0;
-    }
-
-    vector<vector<int> > combinationSum2(vector<int>& candidates, int target)
-    {
-        sort(candidates.begin(), candidates.end(), greater<int>());
-
-        for(vector<int>::iterator i = candidates.begin();i != candidates.end();++i)
-            cout << *i << " ";
-        vector<vector<int> > ans;
-
-        findComb(candidates, ans, target, 0);
         return ans;
     }
 };
+
 
 int main()
 {
     Solution a;
 
-    vector<vector<int> > output;  
+    vector<int> output;
+    // vector<vector<string> > output;
+    // int output;
+    // string output;
+    // bool output;
+    // double output;
 
-    vector<int> input(7);
-    input[0] = 10; 
-    input[1] = 1;
-    input[2] = 2;
-    input[3] = 7;
-    input[4] = 6;
-    input[5] = 1;
-    input[6] = 5;
+    int array[] = {1,2,3,4,5,6,7,8,9};
+    //vector<int> input(array, array + 14);
 
-    output = a.combinationSum2(input, 8);
+    string input1= "", input2 = "b";
+    vector<vector<int> > input(1);
+    // input.push_back(input1);
+    // input.push_back(input2);
+    // cout << input[0] << " " << input[1];
+    input[0].assign(array + 1, array + 3);
+    // input[1].assign(array + 3, array + 6);
+    // input[2].assign(array + 6, array + 9);
+
+    // output = a.add(input1, input2);
+    output = a.spiralOrder(input);
+
+    for(int i = 0;i < output.size();++i)
+    {
+        cout << output[i] << " ";
+    }
 }
